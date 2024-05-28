@@ -4,17 +4,17 @@
 <mapper namespace="com.duyi.seckill.dao.SeckillOrderDao">
 
 
-    <insert id="insert" parameterType="SeckillOrder">
+    <insert id="insert" parameterType="com.duyi.seckill.entity.SeckillOrder">
       insert into seckill_order (seckill_item_id,user_id,state,create_time,order_code)
       values (#{seckillItemId},#{userId},#{state},#{createTime},#{orderCode})
     </insert>
 
 
-    <select id="getAllNotPaid" resultType="SeckillOrder" >
+    <select id="getAllNotPaid" resultType="com.duyi.seckill.entity.SeckillOrder" >
         select * from seckill_order where state = 1
     </select>
 
-    <update id="updateTimeout" parameterType="SeckillOrder">
+    <update id="updateTimeout" parameterType="com.duyi.seckill.entity.SeckillOrder">
         update seckill_order set state = 4 where order_code = #{orderCode}
     </update>
 
@@ -23,7 +23,7 @@
         update seckill_order set state = 2 where order_code = #{orderCode}
     </update>
 
-    <select id="getSeckillOrder" parameterType="string" resultType="SeckillOrder" >
+    <select id="getSeckillOrder" parameterType="string" resultType="com.duyi.seckill.entity.SeckillOrder" >
         select * from seckill_order where order_code = #{orderCode}
     </select>
 

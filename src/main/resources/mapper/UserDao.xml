@@ -3,15 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.duyi.seckill.dao.UserDao">
 
-    <select id="getUser" resultType="User" parameterType="int">
+    <select id="getUser" resultType="com.duyi.seckill.entity.User" parameterType="int">
         select * from user where id = #{id}
     </select>
 
-    <select id="getUserByPhone" resultType="User" parameterType="string">
+    <select id="getUserByPhone" resultType="com.duyi.seckill.entity.User" parameterType="string">
         select * from user where phone = #{phone}
     </select>
 
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="com.duyi.seckill.entity.User">
       insert into user (phone,password)
       values (#{phone},#{password})
     </insert>

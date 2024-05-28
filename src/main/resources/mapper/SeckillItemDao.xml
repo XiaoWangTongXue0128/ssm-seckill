@@ -3,11 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.duyi.seckill.dao.SeckillItemDao">
 
-    <select id="getAll" resultType="SeckillItem">
+    <select id="getAll" resultType="com.duyi.seckill.entity.SeckillItem">
         select * from seckill_item
     </select>
 
-    <select id="get" resultType="SeckillItem" parameterType="int">
+    <select id="get" resultType="com.duyi.seckill.entity.SeckillItem" parameterType="int">
         select * from seckill_item where id = #{id}
     </select>
 
