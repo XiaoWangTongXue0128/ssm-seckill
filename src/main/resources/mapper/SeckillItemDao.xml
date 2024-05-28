@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.duyi.seckill.dao.SeckillItemDao">
+
+    <select id="getAll" resultType="SeckillItem">
+        select * from seckill_item
+    </select>
+
+    <select id="get" resultType="SeckillItem" parameterType="int">
+        select * from seckill_item where id = #{id}
+    </select>
+
+
+    <update id="updateStock" parameterType="int">
+        update seckill_item set number = number - 1 where id =#{id} and number > 0
+    </update>
+
+    <update id="stockAdd" parameterType="int">
+        update seckill_item set number = number + 1 where id =#{id}
+    </update>
+
+
+</mapper>
