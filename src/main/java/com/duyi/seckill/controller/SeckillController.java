@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,7 @@ public class SeckillController {
     }
 
     @RequestMapping(value = "/detail/{seckillId}", method = RequestMethod.GET)
-    public String seckillDetail(@PathVariable("seckillId") Integer seckillId, Model model) {
+    public String seckillDetail(@PathVariable("seckillId") Integer seckillId, Model model,HttpSession session) {
         // 参数Model
 
 //        获取秒杀项目商品
@@ -57,6 +58,7 @@ public class SeckillController {
         }
 
         model.addAttribute("item", item);
+        session.setAttribute("sum_price",item.getPrice());
 
         return "detail";
     }
@@ -171,14 +173,16 @@ public class SeckillController {
     }
 
     @RequestMapping(value = "/pay", method = RequestMethod.GET)
-    @ResponseBody
-    public String pay(String orderCode) {
+    public ModelAndView pay(String orderCode) {
+        ModelAndView mv = new ModelAndView();
 
         // 超时订单不能支付
         SeckillOrder seckillOrder = seckillItemService.getSeckillOrder(orderCode);
 
         if (seckillOrder.getState() == 4) {
-            return "order expire";
+            mv.setViewName("error");
+            mv.addObject("ex","order expire");
+            return mv;
         }
 
         // 重复支付，需要判断，如果已经支付成功，不要在跳转支付宝或微信
@@ -187,7 +191,10 @@ public class SeckillController {
         // 支付验证
         seckillItemService.pay(orderCode);
 
-        return "pay ok";
+        mv.addObject("orderId", orderCode);
+        mv.setViewName("alipay/alipay");
+
+        return mv;
     }
 
 }

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-@EnableScheduling
+@EnableScheduling//开启定时任务
 public class SeckillOrderTask {
 
 
@@ -27,7 +27,7 @@ public class SeckillOrderTask {
     @Autowired
     RedisDao redisDao;
 
-    @Scheduled(fixedRate = 1000 * 1)
+    @Scheduled(fixedRate = 1000 * 1)//声明任务，每秒执行一次
     @Transactional
     public void runsecend() {
         System.out.println("********SeckillOrderTask job is ok******");
